@@ -1,0 +1,134 @@
+Loja-dropship-nextjs/
+ ├─ app/
+ │   ├─ globals.css
+ │   ├─ layout.js
+ │   └─ page.js
+ ├─ public/
+ │   └─ produtos/  (imagens podem ser qualquer uma)
+ ├─ pages/
+ │   └─ api/
+ │        └─ pix.js
+ ├─ package.json
+ ├─ next.config.js
+ ├─ tailwind.config.js
+ ├─ postcss.config.js
+ └─ README.md{
+  "name": "loja-dropship-nextjs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "axios": "^1.4.0"
+  }
+}const nextConfig = { reactStrictMode: true };
+module.exports = nextConfig;module.exports = {
+  content: ["./app/**/*.{js,ts,jsx,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};module.exports = {
+  plugins: { tailwindcss: {}, autoprefixer: {} }
+};@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #050505;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.btn {
+  background: #ff0606;
+  padding: 12px 20px;
+  font-weight: bold;
+  border-radius: 6px;
+  display: inline-block;
+  transition: .2s;
+}
+.btn:hover {
+  background: #b40000;
+}import './globals.css'
+
+export const metadata = {
+  title: "Loja Dropshipping",
+  description: "Ofertas agressivas com PIX automático"
+}
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="pt-br">
+      <body>{children}</body>
+    </html>
+  )
+}import axios from "axios";
+
+const produtos = [
+  { id: 1, nome: "Relógio Militar", preco: 97, img: "/produtos/p1.jpg" },
+  { id: 2, nome: "Smartwatch Pro Max", preco: 147, img: "/produtos/p2.jpg" },
+  { id: 3, nome: "Caixa de Som RGB", preco: 79, img: "/produtos/p3.jpg" },
+  { id: 4, nome: "Fone Bluetooth X9", preco: 59, img: "/produtos/p4.jpg" },
+  { id: 5, nome: "Mini Projetor Portátil", preco: 199, img: "/produtos/p5.jpg" },
+  { id: 6, nome: "Carregador Turbo 3.0", preco: 49, img: "/produtos/p6.jpg" }
+];
+
+async function pagar(preco) {
+  const res = await axios.post("/api/pix", { amount: preco });
+  alert("Código PIX gerado:\n\n" + res.data.copy_code);
+}
+
+export default function Home() {
+  return (
+    <main className="p-7">
+      
+      <h1 className="text-4xl font-bold text-center text-red-500 mb-8">
+        LOJA OFICIAL - OFERTAS AGRESSIVAS ⚡
+      </h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {produtos.map(p => (
+          <div key={p.id} className="bg-zinc-900 p-5 rounded-xl shadow-lg">
+            <img src={p.img} className="rounded-lg mb-4" />
+            <h2 className="text-xl font-bold">{p.nome}</h2>
+            <p className="text-red-400 text-2xl font-bold mt-2">
+              R$ {p.preco}
+            </p>
+            <button className="btn mt-4 w-full" onClick={() => pagar(p.preco)}>
+              Comprar no PIX
+            </button>
+          </div>
+        ))}
+      </div>
+
+    </main>
+  );
+}export default async function handler(req, res) {
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Método não permitido" });
+
+  try {
+    const { amount } = req.body;
+
+    const copy =
+      "00020126330014br.gov.bcb.pix0111069434841415204000053039865802BR5915Daniel Da Silva6009Sao Paulo62290525REC693886B2DC14D9324379146304598A";
+
+    return res.status(200).json({
+      status: "success",
+      amount,
+      copy_code: copy,
+    });
+  } catch (e) {
+    return res.status(500).json({ error: "Erro interno" });
+  }
+}# Loja Dropshipping Next.js
+
+## Rodar localmente
+npm install  
+npm run dev  
+http://localhost:3000
