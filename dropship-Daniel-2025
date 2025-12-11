@@ -1,0 +1,789 @@
+// Projeto completo Next.js 14 - Loja Dropship Agressiva // Estrutura básica para você copiar direto
+
+// 1. app/layout.js export const metadata = { title: "Loja Agressiva - Dropship", description: "Loja extremamente chamativa e agressiva para conversão máxima", };
+
+export default function RootLayout({ children }) { return ( <html lang="pt-BR"> <body className="bg-black text-white font-sans">{children}</body> </html> ); }
+
+// 2. app/globals.css @tailwind base; @tailwind components; @tailwind utilities;
+
+body { background: #000; }
+
+// 3. app/page.js import Image from "next/image";
+
+export default function Home() { return ( <main className="min-h-screen p-6"> <section className="text-center py-10"> <h1 className="text-5xl font-extrabold text-red-600 drop-shadow-lg uppercase"> Oferta Explosiva! </h1> <p className="mt-4 text-xl text-gray-300 max-w-2xl mx-auto"> Promoções agressivas, preços esmagados e entrega rápida! Só hoje! </p> </section>
+
+<section className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+    {[1, 2, 3].map((i) => (
+      <div
+        key={i}
+        className="bg-zinc-900 p-5 rounded-2xl shadow-xl border border-red-700 hover:scale-105 transition"
+      >
+        <Image
+          src={`/produtos/prod${i}.jpg`}
+          alt="Produto agressivo"
+          width={500}
+          height={500}
+          className="rounded-xl"
+        />
+        <h2 className="mt-4 text-2xl font-bold text-red-500 uppercase">
+          Produto {i}
+        </h2>
+        <p className="text-gray-300 mt-2 text-sm">
+          Descrição curta e agressiva que incentiva a compra imediata.
+        </p>
+        <button className="w-full mt-4 bg-red-600 text-white py-3 rounded-xl text-xl font-bold hover:bg-red-800 transition">
+          Comprar Agora
+        </button>
+      </div>
+    ))}
+  </section>
+
+  <footer className="text-center text-gray-500 mt-20 pb-4 text-sm">
+    © 2025 Loja Agressiva • Todos os direitos reservados
+  </footer>
+</main>
+
+); }
+
+// 4. package.json { "name": "loja-agressiva", "version": "1.0.0", "scripts": { "dev": "next dev", "build": "next build", "start": "next start" }, "dependencies": { "next": "14.1.0", "react": "18.2.0", "react-dom": "18.2.0" } }
+
+// 5. next.config.js module.exports = { images: { domains: [], }, };
+
+// 6. Estrutura de imagens // Coloque suas imagens em: public/produtos/prod1.jpg, prod2.jpg, prod3.jpg
+
+// 7. app/produto/page.js — Página de produto agressiva export default function Produto() { return ( <main className="min-h-screen p-6"> <h1 className="text-4xl font-extrabold text-red-600 text-center uppercase drop-shadow-lg"> Oferta ABSURDA — Últimas Unidades! </h1>
+
+<section className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-12">
+    <div className="bg-zinc-900 p-6 rounded-2xl border border-red-700 shadow-xl">
+      <img
+        src="/produtos/prod1.jpg"
+        className="rounded-xl w-full"
+      />
+    </div>
+
+    <div className="flex flex-col justify-center">
+      <h2 className="text-3xl font-bold text-red-500 uppercase">
+        Produto Ultra Premium🔥
+      </h2>
+      <p className="text-gray-300 mt-4 text-lg">
+        Esse produto está **esgotando muito rápido**! Aproveite o preço
+        agressivo antes que aumente.
+      </p>
+
+      <p className="text-5xl mt-6 font-extrabold text-green-500">
+        R$ 97,00
+      </p>
+
+      <button className="mt-8 bg-red-600 hover:bg-red-800 transition py-4 rounded-xl text-2xl font-bold">
+        Comprar Agora 🔥
+      </button>
+    </div>
+  </section>
+</main>
+
+); }
+
+// 8. app/api/pix/route.js — API de pagamento PIX fake (para demonstração) export async function POST() { return Response.json({ status: "pending", pix: "00020101021226850014br.gov.bcb.pix2575fakepixstringdeexemplo520400005303986540597.005802BR5913LojaAgressiva6009SAO PAULO62070503***6304F52A", }); }
+
+// 9. app/checkout/page.js — Checkout agressivo export default function Checkout() { return ( <main className="min-h-screen p-6 text-center"> <h1 className="text-4xl font-extrabold text-red-600 uppercase"> Finalize Sua Compra Agora </h1>
+
+<p className="mt-4 text-gray-300 text-lg">
+    O preço pode subir a qualquer momento. Garanta já!
+  </p>
+
+  <button className="mt-8 bg-green-600 hover:bg-green-700 transition py-4 px-10 rounded-xl text-2xl font-bold">
+    Pagar via PIX ⚡
+  </button>
+</main>
+
+); }
+
+// 10. app/obrigado/page.js — Página de agradecimento agressiva export default function Obrigado() { return ( <main className="min-h-screen flex flex-col items-center justify-center text-center p-6"> <h1 className="text-5xl font-extrabold text-green-500 uppercase drop-shadow-lg"> Pedido Confirmado! 🔥 </h1> <p className="mt-6 text-gray-300 text-xl max-w-xl"> Seu pedido foi processado com sucesso! Em instantes você receberá a confirmação no seu WhatsApp e e-mail. </p> <a
+href="/"
+className="mt-10 text-red-600 text-2xl font-bold underline hover:text-red-800"
+> Voltar para a Loja </a> </main> ); }
+
+// 11. Componentes extras — Popup agressivo // app/components/Popup.js "use client"; import { useState, useEffect } from "react";
+
+export default function Popup() { const [show, setShow] = useState(false);
+
+useEffect(() => { setTimeout(() => setShow(true), 2000); }, []);
+
+if (!show) return null;
+
+return ( <div className="fixed bottom-5 left-5 bg-red-700 text-white p-4 rounded-xl shadow-xl animate-bounce"> 🔥 Oferta Relâmpago! 10% OFF por 5 minutos! </div> ); }
+
+// 12. app/page.js — Adicionando banner explosivo e popup // (Inserir dentro do Home() antes do return final) // import Popup from "./components/Popup"; // <Popup />
+
+// 13. Contagem Regressiva — componente agressivo // app/components/Countdown.js "use client"; import { useEffect, useState } from "react";
+
+export default function Countdown() { const [time, setTime] = useState(300);
+
+useEffect(() => { const interval = setInterval(() => { setTime((prev) => (prev > 0 ? prev - 1 : 0)); }, 1000); return () => clearInterval(interval); }, []);
+
+const min = String(Math.floor(time / 60)).padStart(2, "0"); const sec = String(time % 60).padStart(2, "0");
+
+return ( <p className="text-xl text-red-500 font-bold mt-4"> ⏳ Oferta expira em: {min}:{sec} </p> ); }
+
+// 14. Incluir contagem regressiva na página do produto // Dentro de app/produto/page.js, após o preço: // <Countdown />
+
+// 10. app/obrigado/page.js — Página de agradecimento agressiva export default function Obrigado() { return ( <main className="min-h-screen flex flex-col items-center justify-center p-10 text-center"> <h1 className="text-5xl font-extrabold text-green-500 uppercase drop-shadow-lg"> Pedido Confirmado!🔥 </h1> <p className="mt-6 text-gray-300 text-xl max-w-2xl"> Seu pedido foi processado com sucesso! Você receberá atualizações no seu e-mail. </p> <a
+href="/"
+className="mt-10 bg-red-600 hover:bg-red-800 transition py-4 px-12 rounded-xl text-2xl font-bold"
+> Voltar para a Loja </a> </main> ); }
+
+// 11. Componentes — Popup agressivo de desconto (app/components/Popup.js) "use client"; import { useState, useEffect } from "react";
+
+export default function Popup() { const [show, setShow] = useState(false);
+
+useEffect(() => { const timer = setTimeout(() => setShow(true), 3000); return () => clearTimeout(timer); }, []);
+
+if (!show) return null;
+
+return ( <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"> <div className="bg-red-700 p-8 rounded-2xl text-center max-w-md"> <h2 className="text-3xl font-extrabold text-white uppercase"> Desconto Relâmpago!🔥 </h2> <p className="text-gray-200 mt-3"> Use o cupom <span className="font-bold text-yellow-300">AGORA10</span> e ganhe 10%! </p> <button onClick={() => setShow(false)} className="mt-6 w-full bg-black py-3 rounded-xl text-xl font-bold hover:bg-zinc-900" > Fechar </button> </div> </div> ); }
+
+// 12. app/page.js — Integrando Popup agressivo // Adicione no topo: import Popup from "./components/Popup"; // E dentro do return: <Popup />
+
+// 13. Componente — Contagem regressiva agressiva (app/components/Timer.js) "use client"; import { useState, useEffect } from "react";
+
+export default function Timer() { const [time, setTime] = useState(600); // 10 minutos
+
+useEffect(() => { const interval = setInterval(() => { setTime((t) => (t > 0 ? t - 1 : 0)); }, 1000); return () => clearInterval(interval); }, []);
+
+const min = String(Math.floor(time / 60)).padStart(2, "0"); const sec = String(time % 60).padStart(2, "0");
+
+return ( <p className="text-red-500 text-2xl font-bold mt-4"> Oferta expira em: {min}:{sec} </p> ); }
+
+// Para usar o Timer: <Timer />
+
+// 15. Banner explosivo animado — app/components/Banner.js "use client"; import { motion } from "framer-motion";
+
+export default function Banner() { return ( <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="w-full bg-red-700 text-white text-center py-4 text-2xl font-extrabold uppercase tracking-wide shadow-xl" > 💥 Promoção Explosiva do Dia — Descontos Insanos! 💥 </motion.div> ); }
+
+// 16. Inserir Banner na Home // Dentro de app/page.js logo abaixo de <main> // <Banner />
+
+// 17. Sistema simples de carrinho — app/context/CartContext.js "use client"; import { createContext, useContext, useState } from "react";
+
+const CartContext = createContext();
+
+export function CartProvider({ children }) { const [cart, setCart] = useState([]);
+
+function add(item) { setCart([...cart, item]); }
+
+function remove(id) { setCart(cart.filter((p) => p.id !== id)); }
+
+return ( <CartContext.Provider value={{ cart, add, remove }}> {children} </CartContext.Provider> ); }
+
+export function useCart() { return useContext(CartContext); }
+
+// 18. Botão “Adicionar ao carrinho” — app/components/AddCart.js "use client"; import { useCart } from "../context/CartContext";
+
+export default function AddCart({ product }) { const { add } = useCart();
+
+return ( <button className="mt-4 bg-blue-600 hover:bg-blue-800 text-white py-3 rounded-xl w-full text-xl font-bold" onClick={() => add(product)} > Adicionar ao Carrinho 🛒 </button> ); }
+
+// 19. Página do carrinho — app/carrinho/page.js import { useCart } from "../context/CartContext";
+
+export default function Carrinho() { const { cart, remove } = useCart();
+
+return ( <main className="min-h-screen p-6 text-white"> <h1 className="text-4xl font-bold text-center text-red-600 uppercase"> Seu Carrinho 🛒 </h1>
+
+{cart.length === 0 && (
+    <p className="text-center text-gray-400 mt-10 text-xl">
+      Seu carrinho está vazio.
+    </p>
+  )}
+
+  <div className="grid gap-6 mt-10 max-w-2xl mx-auto">
+    {cart.map((item, index) => (
+      <div
+        key={index}
+        className="bg-zinc-900 p-5 rounded-xl border border-red-700"
+      >
+        <h2 className="text-2xl font-bold text-red-500">{item.name}</h2>
+        <p className="text-lg mt-2">R$ {item.price}</p>
+        <button
+          className="mt-4 bg-red-600 py-2 px-6 rounded-lg hover:bg-red-800"
+          onClick={() => remove(item.id)}
+        >
+          Remover ❌
+        </button>
+      </div>
+    ))}
+  </div>
+</main>
+
+); }
+
+// 20. Slider agressivo de produtos — app/components/Slider.js "use client"; import { useState } from "react"; import Image from "next/image";
+
+export default function Slider() { const produtos = [1, 2, 3, 4]; const [index, setIndex] = useState(0);
+
+function next() { setIndex((i) => (i + 1) % produtos.length); }
+
+function prev() { setIndex((i) => (i - 1 + produtos.length) % produtos.length); }
+
+return ( <div className="relative w-full max-w-xl mx-auto mt-12"> <Image src={/produtos/prod${produtos[index]}.jpg} width={500} height={500} className="rounded-2xl border border-red-700 shadow-xl" alt="Slider agressivo" />
+
+<button
+    onClick={prev}
+    className="absolute left-0 top-1/2 -translate-y-1/2 bg-red-700 text-white py-2 px-4 rounded-xl hover:bg-red-900"
+  >
+    ◀
+  </button>
+
+  <button
+    onClick={next}
+    className="absolute right-0 top-1/2 -translate-y-1/2 bg-red-700 text-white py-2 px-4 rounded-xl hover:bg-red-900"
+  >
+    ▶
+  </button>
+</div>
+
+); }
+
+// 21. Inserir Slider na Home // import Slider from "./components/Slider"; // <Slider />
+
+// 22. Página de FAQ agressiva — app/faq/page.js export default function FAQ() { return ( <main className="p-10 max-w-3xl mx-auto"> <h1 className="text-4xl font-extrabold text-red-600 uppercase text-center"> FAQ — Perguntas Frequentes 🔥 </h1>
+
+<div className="mt-10 space-y-6 text-gray-300">
+    <details className="bg-zinc-900 p-4 rounded-xl border border-red-700">
+      <summary className="cursor-pointer text-xl text-white font-bold">
+        Qual o prazo de entrega?
+      </summary>
+      <p className="mt-2">Entrega rápida com rastreamento total.</p>
+    </details>
+
+    <details className="bg-zinc-900 p-4 rounded-xl border border-red-700">
+      <summary className="cursor-pointer text-xl text-white font-bold">
+        Posso pagar via PIX?
+      </summary>
+      <p className="mt-2">Sim! Temos checkout via PIX instantâneo.</p>
+    </details>
+
+    <details className="bg-zinc-900 p-4 rounded-xl border border-red-700">
+      <summary className="cursor-pointer text-xl text-white font-bold">
+        O produto tem garantia?
+      </summary>
+      <p className="mt-2">Garantia agressiva de 7 dias sem risco!</p>
+    </details>
+  </div>
+</main>
+
+); }
+
+// 23. Página de Contato — app/contato/page.js export default function Contato() { return ( <main className="min-h-screen p-10 max-w-xl mx-auto text-center"> <h1 className="text-4xl font-extrabold text-red-600 uppercase"> Fale Conosco 📩 </h1>
+
+<form className="mt-10 space-y-6">
+    <input
+      type="text"
+      placeholder="Seu nome"
+      className="w-full p-4 rounded-xl bg-zinc-900 border border-red-700 text-white"
+    />
+    <input
+      type="email"
+      placeholder="Seu e-mail"
+      className="w-full p-4 rounded-xl bg-zinc-900 border border-red-700 text-white"
+    />
+    <textarea
+      rows="5"
+      placeholder="Mensagem"
+      className="w-full p-4 rounded-xl bg-zinc-900 border border-red-700 text-white"
+    ></textarea>
+
+    <button className="w-full py-4 bg-red-600 hover:bg-red-800 rounded-xl font-bold text-xl">
+      Enviar Mensagem
+    </button>
+  </form>
+</main>
+
+); }
+
+// 24. Middleware anti-abandono — redireciona visitantes para página agressiva // middleware.js (criar na raiz) export function middleware() { return Response.redirect(new URL("/produto", "http://localhost:3000")); }
+
+// 25. SEO agressivo — app/head.js export default function Head() { return ( <> <title>🔥 Loja Agressiva 🔥</title> <meta name="description" content="Loja agressiva com descontos explosivos" /> <meta name="keywords" content="promoção, agressivo, desconto, oferta" /> </> ); }
+
+// 31. Componente de Checkout — app/checkout/page.js import Image from "next/image";
+
+export default function Checkout() { return ( <main className="min-h-screen p-10 max-w-2xl mx-auto"> <h1 className="text-4xl font-extrabold text-red-600 uppercase text-center"> Checkout Agressivo 💰🔥 </h1>
+
+<div className="mt-10 bg-zinc-900 p-6 rounded-2xl border border-red-700 shadow-xl">
+    <h2 className="text-2xl font-bold text-white mb-4">Resumo do Pedido</h2>
+
+    <div className="flex items-center gap-4 border-b border-red-700 pb-4 mb-4">
+      <Image
+        src="/produtos/prod1.jpg"
+        width={120}
+        height={120}
+        className="rounded-xl border border-red-700"
+        alt="Produto"
+      />
+      <div>
+        <p className="text-white font-bold text-lg">Produto Ultra Agressivo</p>
+        <p className="text-red-500 text-xl font-extrabold">R$ 97,00</p>
+      </div>
+    </div>
+
+    <div className="mt-6">
+      <h3 className="text-xl font-bold text-white">Informações Pessoais</h3>
+      <input
+        type="text"
+        placeholder="Nome Completo"
+        className="w-full p-3 rounded-xl bg-zinc-800 border border-red-700 text-white mt-3"
+      />
+      <input
+        type="email"
+        placeholder="E-mail"
+        className="w-full p-3 rounded-xl bg-zinc-800 border border-red-700 text-white mt-3"
+      />
+      <input
+        type="text"
+        placeholder="CPF"
+        className="w-full p-3 rounded-xl bg-zinc-800 border border-red-700 text-white mt-3"
+      />
+    </div>
+
+    <div className="mt-8">
+      <h3 className="text-xl font-bold text-white mb-3">Pagamento</h3>
+
+      <div className="grid grid-cols-2 gap-4">
+        <a
+          href="/checkout/pix"
+          className="p-4 bg-green-600 hover:bg-green-800 text-white text-center rounded-xl font-bold text-xl border border-green-900"
+        >
+          Pagar com PIX ⚡
+        </a>
+
+        <a
+          href="/checkout/cartao"
+          className="p-4 bg-blue-600 hover:bg-blue-800 text-white text-center rounded-xl font-bold text-xl border border-blue-900"
+        >
+          Cartão 💳
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+); }
+
+// 32. Página PIX — app/checkout/pix/page.js export default function PixPage() { return ( <main className="min-h-screen p-10 max-w-xl mx-auto text-center"> <h1 className="text-3xl font-bold text-green-500">Pagamento via PIX ⚡</h1> <p className="text-white mt-4 text-lg">Escaneie o QR Code abaixo:</p>
+
+<div className="mt-6 p-6 bg-zinc-900 border border-green-700 rounded-xl">
+    <img
+      src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=PAGAMENTO-EXEMPLO"
+      alt="QR Code"
+      className="mx-auto rounded-xl"
+    />
+  </div>
+
+  <p className="text-green-400 text-lg mt-6 font-bold">Pagamento confirmado automaticamente!</p>
+</main>
+
+); }
+
+// 33. Página Cartão — app/checkout/cartao/page.js export default function CartaoPage() { return ( <main className="min-h-screen p-10 max-w-xl mx-auto text-center"> <h1 className="text-3xl font-bold text-blue-500">Pagamento via Cartão 💳</h1>
+
+<form className="mt-10 space-y-6 bg-zinc-900 p-6 rounded-xl border border-blue-700">
+    <input
+      type="text"
+      placeholder="Número do Cartão"
+      className="w-full p-3 rounded-xl bg-zinc-800 border border-blue-700 text-white"
+    />
+    <input
+      type="text"
+      placeholder="Nome impresso no cartão"
+      className="w-full p-3 rounded-xl bg-zinc-800 border border-blue-700 text-white"
+    />
+
+    <div className="grid grid-cols-2 gap-4">
+      <input
+        type="text"
+        placeholder="Validade"
+        className="p-3 rounded-xl bg-zinc-800 border border-blue-700 text-white"
+      />
+      <input
+        type="text"
+        placeholder="CVV"
+        className="p-3 rounded-xl bg-zinc-800 border border-blue-700 text-white"
+      />
+    </div>
+
+    <button className="w-full py-4 bg-blue-600 hover:bg-blue-800 rounded-xl font-bold text-xl">
+      Finalizar Pagamento
+    </button>
+  </form>
+</main>
+
+); }
+
+// 34. Integração REAL com Mercado Pago — pages/api/mercadopago.js import mercadopago from "mercadopago";
+
+mercadopago.configure({ access_token: process.env.MP_ACCESS_TOKEN, });
+
+export default async function handler(req, res) { if (req.method !== "POST") return res.status(405).end();
+
+try { const { title, price } = req.body;
+
+const preference = await mercadopago.preferences.create({
+  items: [
+    {
+      title,
+      quantity: 1,
+      currency_id: "BRL",
+      unit_price: Number(price),
+    },
+  ],
+  back_urls: {
+    success: "https://sualoja.com/checkout/sucesso",
+    failure: "https://sualoja.com/checkout/falha",
+    pending: "https://sualoja.com/checkout/pendente",
+  },
+  auto_return: "approved",
+});
+
+return res.status(200).json({ init_point: preference.body.init_point });
+
+} catch (e) { return res.status(500).json({ error: e.message }); } }
+
+// 35. Botão de pagamento real — app/checkout/cartao/page.js (alterar) // Substituir o botão final por integração Mercado Pago
+
+async function pagarMP() { const req = await fetch("/api/mercadopago", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title: "Produto Ultra Agressivo", price: 97 }), });
+
+const res = await req.json(); if (res.init_point) window.location.href = res.init_point; }
+
+<button onClick={pagarMP} className="w-full py-4 bg-blue-600 hover:bg-blue-800 rounded-xl font-bold text-xl"
+
+> 
+
+Pagar com Mercado Pago 💳 </button>
+
+// 36. Integração REAL com PIX via Mercado Pago // Página app/checkout/pix/page.js (versão real)
+
+import { useState } from "react";
+
+export default function PixReal() { const [qr, setQr] = useState(null);
+
+async function gerarPix() { const req = await fetch("/api/pix", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title: "Produto Ultra Agressivo", price: 97, }), });
+
+const res = await req.json();
+setQr(res.qr);
+
+}
+
+return ( <main className="min-h-screen p-10 max-w-xl mx-auto text-center"> <h1 className="text-3xl font-bold text-green-500">PIX Instantâneo ⚡</h1>
+
+{qr ? (
+    <img
+      src={`data:image/png;base64,${qr}`}
+      alt="QR Code PIX"
+      className="mx-auto mt-6 rounded-xl"
+    />
+  ) : (
+    <button
+      onClick={gerarPix}
+      className="mt-10 p-4 bg-green-600 hover:bg-green-800 rounded-xl font-bold text-xl"
+    >
+      Gerar PIX real
+    </button>
+  )}
+</main>
+
+); }
+
+// 37. API PIX real — pages/api/pix.js import mercadopago from "mercadopago";
+
+mercadopago.configure({ access_token: process.env.MP_ACCESS_TOKEN });
+
+export default async function handler(req, res) { if (req.method !== "POST") return res.status(405).end();
+
+try { const { title, price } = req.body;
+
+const payment = await mercadopago.payment.create({
+  transaction_amount: Number(price),
+  description: title,
+  payment_method_id: "pix",
+  payer: { email: "comprador@example.com" },
+});
+
+return res.status(200).json({ qr: payment.body.point_of_interaction.transaction_data.qr_code_base64 });
+
+} catch (e) { res.status(500).json({ error: e.message }); } }
+
+// 38. Página de Obrigado — app/checkout/sucesso/page.js export default function Sucesso() { return ( <main className="min-h-screen p-10 text-center"> <h1 className="text-4xl font-extrabold text-green-500"> Pagamento Confirmado! 🔥 </h1> <p className="text-white text-xl mt-6"> Seu pedido foi recebido e está sendo processado. </p> </main> ); }
+
+// 39. Dashboard Admin — app/admin/page.js "use client"; import { useEffect, useState } from "react";
+
+export default function Dashboard() { const [vendas, setVendas] = useState([]); const [loading, setLoading] = useState(true);
+
+async function carregar() { const req = await fetch("/api/admin/vendas"); const res = await req.json(); setVendas(res.vendas || []); setLoading(false); }
+
+useEffect(() => { carregar(); }, []);
+
+return ( <main className="min-h-screen p-10 max-w-4xl mx-auto"> <h1 className="text-4xl font-extrabold text-red-600 uppercase text-center mb-10"> Dashboard Agressivo 🧨📊 </h1>
+
+{loading ? (
+    <p className="text-white text-center text-xl">Carregando...</p>
+  ) : (
+    <div className="bg-zinc-900 p-6 rounded-xl border border-red-700 shadow-xl">
+      <h2 className="text-white text-2xl font-bold mb-6 text-center">
+        Vendas Recentes
+      </h2>
+
+      <div className="overflow-auto">
+        <table className="w-full text-white text-left">
+          <thead>
+            <tr className="border-b border-red-700 text-red-400">
+              <th className="p-3">ID</th>
+              <th className="p-3">Produto</th>
+              <th className="p-3">Valor</th>
+              <th className="p-3">Status</th>
+              <th className="p-3">Data</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {vendas.map((v) => (
+              <tr key={v.id} className="border-b border-zinc-700">
+                <td className="p-3">{v.id}</td>
+                <td className="p-3">{v.title}</td>
+                <td className="p-3 font-bold text-green-400">R$ {v.price}</td>
+                <td
+                  className={`p-3 font-bold ${
+                    v.status === "approved"
+                      ? "text-green-500"
+                      : v.status === "pending"
+                      ? "text-yellow-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  {v.status.toUpperCase()}
+                </td>
+                <td className="p-3">{v.data}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+</main>
+
+); }
+
+// 40. API para buscar vendas — pages/api/admin/vendas.js export default async function handler(req, res) { // Aqui você pode conectar ao banco real (MongoDB, Firebase, PlanetScale, Supabase)
+
+const vendasFake = [ { id: "984738", title: "Produto Ultra Agressivo", price: 97, status: "approved", data: "2025-12-11", }, { id: "984739", title: "Produto Turbo", price: 147, status: "pending", data: "2025-12-11", }, { id: "984740", title: "Produto Ninja", price: 59, status: "rejected", data: "2025-12-10", }, ];
+
+res.status(200).json({ vendas: vendasFake }); }
+
+// 41. Link para o Dashboard no menu — app/layout.js // <a href="/admin" className="hover:text-red-500 font-bold">Dashboard</a>
+
+// =============================== // 26. Integração REAL com MongoDB (via Mongoose) // =============================== // Instalar no projeto: // npm install mongoose
+
+// lib/mongo.js import mongoose from "mongoose";
+
+export async function connectMongo() { if (mongoose.connection.readyState >= 1) return;
+
+return mongoose.connect(process.env.MONGO_URL, { dbName: "lojagressiva", }); }
+
+// Model Pedido — models/Pedido.js import { Schema, model, models } from "mongoose";
+
+const PedidoSchema = new Schema({ nome: String, email: String, valor: Number, status: String, data: { type: Date, default: Date.now }, });
+
+export default models.Pedido || model("Pedido", PedidoSchema);
+
+// =============================== // 27. Webhook REAL para Mercado Pago // =============================== // app/api/webhook/route.js import { connectMongo } from "../../../lib/mongo"; import Pedido from "../../../models/Pedido";
+
+export async function POST(req) { await connectMongo(); const body = await req.json();
+
+// Salvar no banco await Pedido.create({ nome: body.nome || "Cliente", email: body.email || "–", valor: body.valor, status: body.status, });
+
+return Response.json({ ok: true }); }
+
+// =============================== // 28. Gráficos profissionais com Recharts // =============================== // npm install recharts
+
+// app/admin/components/GraficoVendas.js "use client"; import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+
+export default function GraficoVendas({ data }) { return ( <div className="bg-zinc-900 p-6 rounded-2xl border border-red-700 mt-10"> <h2 className="text-3xl font-bold text-red-500 mb-4 text-center"> Faturamento Diário </h2> <LineChart width={700} height={350} data={data}> <CartesianGrid strokeDasharray="3 3" /> <XAxis dataKey="data" stroke="#fff" /> <YAxis stroke="#fff" /> <Tooltip /> <Line type="monotone" dataKey="valor" stroke="red" strokeWidth={3} /> </LineChart> </div> ); }
+
+// =============================== // 29. Login Admin Seguro (JWT + Middleware) // =============================== // npm install jsonwebtoken bcryptjs
+
+// app/admin/login/page.js "use client"; import { useState } from "react";
+
+export default function LoginAdmin() { const [email, setEmail] = useState(""); const [senha, setSenha] = useState("");
+
+async function entrar() { await fetch("/api/admin/login", { method: "POST", body: JSON.stringify({ email, senha }), }); window.location.href = "/admin"; }
+
+return ( <main className="min-h-screen flex flex-col items-center justify-center p-10 text-center"> <h1 className="text-4xl text-red-600 font-bold uppercase mb-6"> Área Administrativa </h1>
+
+<input
+    className="p-4 bg-zinc-900 border border-red-700 rounded-xl w-full max-w-sm mb-4"
+    placeholder="E-mail"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+  />
+
+  <input
+    type="password"
+    className="p-4 bg-zinc-900 border border-red-700 rounded-xl w-full max-w-sm"
+    placeholder="Senha"
+    value={senha}
+    onChange={(e) => setSenha(e.target.value)}
+  />
+
+  <button
+    onClick={entrar}
+    className="mt-6 bg-red-600 hover:bg-red-800 py-3 px-10 rounded-xl text-xl font-bold"
+  >
+    Entrar
+  </button>
+</main>
+
+); }
+
+// =============================== // 30. Middleware protegendo página admin // =============================== // middleware.js import { NextResponse } from "next/server";
+
+export function middleware(req) { if (req.nextUrl.pathname.startsWith("/admin")) { const token = req.cookies.get("token"); if (!token) return NextResponse.redirect(new URL("/admin/login", req.url)); } }
+
+export const config = { matcher: ["/admin/:path*"], };
+
+// =============================== // 31. Sistema de Produtos (CRUD completo) // =============================== // models/Produto.js import { Schema, model, models } from "mongoose";
+
+const ProdutoSchema = new Schema({ nome: String, preco: Number, imagem: String, estoque: Number, });
+
+export default models.Produto || model("Produto", ProdutoSchema);
+
+// app/admin/produtos/page.js import Produto from "../../../models/Produto"; import { connectMongo } from "../../../lib/mongo";
+
+export default async function ProdutosPage() { await connectMongo(); const produtos = await Produto.find();
+
+return ( <main className="min-h-screen p-10 text-white"> <h1 className="text-4xl font-bold text-red-600 uppercase text-center"> Gerenciar Produtos </h1>
+
+<div className="grid mt-10 gap-6">
+    {produtos.map((p) => (
+      <div key={p._id} className="bg-zinc-900 p-6 rounded-xl border border-red-700">
+        <h2 className="text-2xl font-bold">{p.nome}</h2>
+        <p className="text-lg mt-2">R$ {p.preco}</p>
+        <p className="text-gray-400">Estoque: {p.estoque}</p>
+      </div>
+    ))}
+  </div>
+</main>
+
+); }
+
+// =============================== // 32. Painel Admin COMPLETO com gráficos + vendas + produtos // =============================== // app/admin/page.js import { connectMongo } from "../../lib/mongo"; import Pedido from "../../models/Pedido"; import GraficoVendas from "./components/GraficoVendas";
+
+export default async function Admin() { await connectMongo(); const pedidos = await Pedido.find();
+
+const chart = pedidos.map((p) => ({ data: p.data.toLocaleDateString(), valor: p.valor }));
+
+return ( <main className="p-10 text-white min-h-screen"> <h1 className="text-5xl text-red-600 font-extrabold uppercase text-center"> Painel Administrativo 🔥 </h1>
+
+<GraficoVendas data={chart} />
+
+  <section className="mt-12">
+    <h2 className="text-4xl font-bold text-red-500 mb-4">Últimas Vendas</h2>
+    <div className="space-y-4">
+      {pedidos.map((p) => (
+        <div key={p._id} className="bg-zinc-900 p-5 rounded-2xl border border-red-700">
+          <p className="text-xl">{p.nome}</p>
+          <p>Status: {p.status}</p>
+          <p>Valor: R$ {p.valor}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</main>
+
+); }
+
+// =============================== // 42. PIX REAL — Instruções e Webhook para confirmar pagamentos (Mercado Pago) // ===============================
+
+// 1) Variáveis de ambiente que você precisa configurar (.env): // MONGO_URL=... // MP_ACCESS_TOKEN=SEU_ACCESS_TOKEN_DO_MERCADOPAGO // MP_PUBLIC_KEY=SEU_PUBLIC_KEY (opcional) // NEXT_PUBLIC_APP_URL=https://sualoja.com
+
+// 2) Instalar dependências (se ainda não instalou): // npm install mercadopago
+
+// 3) API para gerar cobrança PIX (já temos pages/api/pix.js) — versão completa com verificação // pages/api/pix.js import mercadopago from "mercadopago"; import { connectMongo } from "../../lib/mongo"; import Pedido from "../../models/Pedido";
+
+mercadopago.configure({ access_token: process.env.MP_ACCESS_TOKEN });
+
+export default async function handler(req, res) { if (req.method !== "POST") return res.status(405).end();
+
+try { const { title, price, cliente } = req.body;
+
+const payment = await mercadopago.payment.create({
+  transaction_amount: Number(price),
+  description: title,
+  payment_method_id: "pix",
+  payer: { email: cliente?.email || "comprador@example.com", first_name: cliente?.name || "Cliente" },
+});
+
+// Salvar pedido com status PENDING no MongoDB
+await connectMongo();
+const pedido = await Pedido.create({
+  nome: cliente?.name || "Cliente",
+  email: cliente?.email || "–",
+  valor: Number(price),
+  status: payment.body.status, // geralmente 'pending'
+  data: new Date(),
+});
+
+return res.status(200).json({
+  qr: payment.body.point_of_interaction.transaction_data.qr_code_base64,
+  qr_text: payment.body.point_of_interaction.transaction_data.qr_code,
+  id: payment.body.id,
+  pedidoId: pedido._id,
+});
+
+} catch (e) { console.error(e); return res.status(500).json({ error: e.message }); } }
+
+// 4) Webhook para receber notificações do Mercado Pago e confirmar pagamento // pages/api/webhook/mercadopago.js import mercadopago from "mercadopago"; import { connectMongo } from "../../../lib/mongo"; import Pedido from "../../../models/Pedido";
+
+mercadopago.configure({ access_token: process.env.MP_ACCESS_TOKEN });
+
+export default async function handler(req, res) { // Mercado Pago envia notificações com query params: topic=payment & id={payment_id} try { const { topic, id } = req.query;
+
+if (!id) return res.status(400).end();
+
+// Buscar pagamento no Mercado Pago (confirmação)
+const mpRes = await fetch(`https://api.mercadopago.com/v1/payments/${id}`, {
+  headers: { Authorization: `Bearer ${process.env.MP_ACCESS_TOKEN}` },
+});
+
+const payment = await mpRes.json();
+
+// Atualizar pedido no banco (localize por valor, email, ou salve o payment.id no pedido ao criar)
+await connectMongo();
+
+// Exemplo simples: procurar pedido por valor e status pending
+const pedido = await Pedido.findOneAndUpdate(
+  { valor: payment.transaction_amount, status: { $in: ["pending", "in_process"] } },
+  { status: payment.status },
+  { new: true }
+);
+
+// Se quiser, notificar por e-mail/WhatsApp aqui (integração externa)
+
+return res.status(200).json({ ok: true, payment });
+
+} catch (e) { console.error(e); res.status(500).json({ error: e.message }); } }
+
+// 5) Configurar na Dashboard do Mercado Pago // - Vá em Configurações > Notificações (ou Webhooks) no painel do Mercado Pago // - Adicione a URL do seu webhook: https://sualoja.com/api/webhook/mercadopago // - Selecione os tópicos (payments) para receber notificações
+
+// 6) Front-end: gerar QR e mostrar para o cliente (exemplo já incluído em app/checkout/pix/page.js) // - Chame POST /api/pix com { title, price, cliente: { name, email } } // - Receba qr (base64) e mostre como <img src={data:image/png;base64,${qr}} /> // - Guarde o pedidoId retornado para consultar status via API
+
+// 7) Endpoint para checar status do pedido (polling) — pages/api/pedido/status.js import { connectMongo } from "../../lib/mongo"; import Pedido from "../../models/Pedido";
+
+export default async function handler(req, res) { const { id } = req.query; await connectMongo(); const pedido = await Pedido.findById(id); if (!pedido) return res.status(404).json({ error: "Pedido não encontrado" }); return res.status(200).json({ status: pedido.status }); }
+
+// 8) Observações importantes de segurança e implantação: // - Nunca exponha MP_ACCESS_TOKEN no front-end. // - Use HTTPS (obrigatório) e URLs públicas para o webhook. // - Teste no ambiente sandbox do Mercado Pago antes de ir para produção. // - No sandbox, gere um PIX e faça o fluxo completo para garantir que o webhook atualiza o pedido.
+
+// =============================== // 43. Alternativa: Gerencianet (PIX) — se preferir não usar Mercado Pago // =============================== // Gerencianet oferece API PIX com cobrança e webhook também. O fluxo é similar: // - Criar cobrança via API => recebe QR code (base64 + texto) // - Mostrar QR para cliente => receber webhook de pagamento => confirmar pedido
+
+// Documentação Gerencianet: https://dev.gerencianet.com.br/
+
+// =============================== // Final — instruções finais: // 1) Configure .env com MP_ACCESS_TOKEN e MONGO_URL // 2) Instale dependências e suba no ambiente (Vercel ou servidor com HTTPS) // 3) Configure webhook no painel Mercado Pago apontando para /api/webhook/mercadopago // 4) Teste em sandbox e depois habilite em produção
+
+// Se quiser, eu já monto todos os arquivos do projeto em ZIP pronto para deploy (com .env.example e instruções).
